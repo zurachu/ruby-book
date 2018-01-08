@@ -9,5 +9,3 @@ def fizz_buzz(num)
     num.to_s
   end
 end
-
-(1..15).each {|n| puts fizz_buzz(n) }
