@@ -1,26 +1,24 @@
 module Effects
   def self.reverse
-    -> (words) do
-      words.split(" ")
-        .map(&:reverse)
-        .join(" ")
-    end
+    process_by_word(&:reverse)
   end
 
   def self.echo(count)
-    -> (words) do
-      words.split(" ")
-        .map do |word|
-          word.chars.map{|c| c * count }.join
-        end
-        .join(" ")
+    process_by_word do |word|
+      word.chars.map {|c| c * count }.join
     end
   end
 
   def self.loud(count)
+    process_by_word {|word| word.upcase + "!" * count }
+  end
+
+  private
+
+  def self.process_by_word(&block)
     -> (words) do
       words.split(" ")
-        .map {|word| word.upcase + "!" * count }
+        .map(&block)
         .join(" ")
     end
   end
